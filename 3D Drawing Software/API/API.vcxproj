@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>17.0</VCProjectVersion>
+    <Keyword>Win32Proj</Keyword>
+    <ProjectGuid>{1b7b77c6-a6a8-4dcb-a04b-15a775383e84}</ProjectGuid>
+    <RootNamespace>API</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <OutDir>$(SolutionDir)bin\$(ProjectName)-$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)bin-int\$(ProjectName)-$(Platform)\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <OutDir>$(SolutionDir)bin\$(ProjectName)-$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)bin-int\$(ProjectName)-$(Platform)\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_PLATFORM_WINDOWS;_BUILD_DLL;GLEW_STATIC;</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\SDK\ffmpeg\include;$(SolutionDir)..\SDK\OpenCV\include;$(SolutionDir)..\SDK\glew-sdk\include;$(SolutionDir)..\SDK\glfw-sdk\include</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>$(SolutionDir)..\SDK\ffmpeg\lib;$(SolutionDir)..\SDK\OpenCV\lib;$(SolutionDir)..\SDK\glew-sdk\lib\Release\x64;$(SolutionDir)..\SDK\glfw-sdk\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>avcodec.lib;avdevice.lib;avfilter.lib;avformat.lib;avutil.lib;postproc.lib;swresample.lib;swscale.lib;opengl32.lib;glew32s.lib;glfw3.lib;opencv_world490.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <PostBuildEvent>
+      <Command>XCOPY "$(OutDir)" "$(SolutionDir)bin\Tests-$(Platform)\$(Configuration)\" /S /Y</Command>
+    </PostBuildEvent>
+    <PreBuildEvent>
+      <Command>rd /s /q "$(SolutionDir)include\"
+XCOPY "$(ProjectDir)src\" "$(SolutionDir)include\" /S /Y /exclude:exclusions.txt</Command>
+    </PreBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_PLATFORM_WINDOWS;_BUILD_DLL;GLEW_STATIC;</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\SDK\ffmpeg\include;$(SolutionDir)..\SDK\OpenCV\include;$(SolutionDir)..\SDK\glew-sdk\include;$(SolutionDir)..\SDK\glfw-sdk\include</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>$(SolutionDir)..\SDK\ffmpeg\lib;$(SolutionDir)..\SDK\OpenCV\lib;$(SolutionDir)..\SDK\glew-sdk\lib\Release\x64;$(SolutionDir)..\SDK\glfw-sdk\lib;$(SolutionDir)..\SDK\glfw-sdk\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>avcodec.lib;avdevice.lib;avfilter.lib;avformat.lib;avutil.lib;postproc.lib;swresample.lib;swscale.lib;opengl32.lib;glew32s.lib;glfw3.lib;opencv_world490.lib;glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <PostBuildEvent>
+      <Command>XCOPY "$(OutDir)" "$(SolutionDir)bin\Tests-$(Platform)\$(Configuration)\" /S /Y</Command>
+    </PostBuildEvent>
+    <PreBuildEvent>
+      <Command>rd /s /q "$(SolutionDir)include\"
+XCOPY "$(ProjectDir)src\" "$(SolutionDir)include\" /S /Y /exclude:exclusions.txt</Command>
+    </PreBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="src\Camera\Camera.h" />
+    <ClInclude Include="src\Cone\Cone.h" />
+    <ClInclude Include="src\Core\FrameBufferTexture\FrameBufferTexture.h" />
+    <ClInclude Include="src\Core\nanoVG\fontstash.h" />
+    <ClInclude Include="src\Core\nanoVG\nanovg.h" />
+    <ClInclude Include="src\Core\nanoVG\nanovg_gl.h" />
+    <ClInclude Include="src\Core\nanoVG\nanovg_gl_utils.h" />
+    <ClInclude Include="src\Core\nanoVG\stb_image.h" />
+    <ClInclude Include="src\Core\nanoVG\stb_truetype.h" />
+    <ClInclude Include="src\Core\Object\Object.h" />
+    <ClInclude Include="src\Core\Transform\Transform.h" />
+    <ClInclude Include="src\Core\Vertex\Vertex.h" />
+    <ClInclude Include="src\Cube\Cube.h" />
+    <ClInclude Include="src\OrthogonalCamera\OrthogonalCamera.h" />
+    <ClInclude Include="src\PerspectiveCamera\PerspectiveCamera.h" />
+    <ClInclude Include="src\Core\CoreGL.h" />
+    <ClInclude Include="src\Core\DLLBuild.h" Link="..\include\Core\DLLBuild.h" CopyToOutputDirectory="PreserveNewest" />
+    <ClInclude Include="src\Core\IndexBuffer\IndexBuffer.h" />
+    <ClInclude Include="src\Core\ShaderArena\ShaderArena.h" />
+    <ClInclude Include="src\Core\Shader\Shader.h" />
+    <ClInclude Include="src\Core\VertexArray\VertexArray.h" />
+    <ClInclude Include="src\Core\VertexBufferLayout\VertexBufferLayout.h" />
+    <ClInclude Include="src\Core\VertexBuffer\VertexBuffer.h" />
+    <ClInclude Include="src\DrawApi.h" Link="..\include\DrawApi.h" CopyToOutputDirectory="PreserveNewest" />
+    <ClInclude Include="src\Line\Line.h" />
+    <ClInclude Include="src\OpenGL\OpenGL.h" />
+    <ClInclude Include="src\Point\Point.h" />
+    <ClInclude Include="src\PolygonalSurface\PolygonalSurface.h" />
+    <ClInclude Include="src\Pyramid\Pyramid.h" />
+    <ClInclude Include="src\Scene\Scene.h" />
+    <ClInclude Include="src\Shape\Shape.h" />
+    <ClInclude Include="src\Sphere\Sphere.h" />
+    <ClInclude Include="src\Triangle\Triangle.h" />
+    <ClInclude Include="src\Video\Video.h" />
+    <ClInclude Include="src\Window\Window.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\Cone\Cone.cpp" />
+    <ClCompile Include="src\Core\FrameBufferTexture\FrameBufferTexture.cpp" />
+    <ClCompile Include="src\Core\nanoVG\nanovg.c" />
+    <ClCompile Include="src\Core\Object\Object.cpp" />
+    <ClCompile Include="src\Core\Transform\Transform.cpp" />
+    <ClCompile Include="src\Core\Vertex\Vertex.cpp" />
+    <ClCompile Include="src\Cube\Cube.cpp" />
+    <ClCompile Include="src\OrthogonalCamera\OrthogonalCamera.cpp" />
+    <ClCompile Include="src\PerspectiveCamera\PerspectiveCamera.cpp" />
+    <ClCompile Include="src\Core\CoreGL.cpp" />
+    <ClCompile Include="src\Core\IndexBuffer\IndexBuffer.cpp" />
+    <ClCompile Include="src\Core\ShaderArena\ShaderArena.cpp" />
+    <ClCompile Include="src\Core\Shader\Shader.cpp" />
+    <ClCompile Include="src\Core\VertexArray\VertexArray.cpp" />
+    <ClCompile Include="src\Core\VertexBuffer\VertexBuffer.cpp" />
+    <ClCompile Include="src\Line\Line.cpp" />
+    <ClCompile Include="src\OpenGL\OpenGL.cpp" />
+    <ClCompile Include="src\Point\Point.cpp" />
+    <ClCompile Include="src\PolygonalSurface\PolygonalSurface.cpp" />
+    <ClCompile Include="src\Pyramid\Pyramid.cpp" />
+    <ClCompile Include="src\Scene\Scene.cpp" />
+    <ClCompile Include="src\Sphere\Sphere.cpp" />
+    <ClCompile Include="src\Triangle\Triangle.cpp" />
+    <ClCompile Include="src\Video\Video.cpp" />
+    <ClCompile Include="src\Window\Window.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="exclusions.txt" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
